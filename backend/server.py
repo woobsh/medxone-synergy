@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 from pathlib import Path
 
 ROOT_DIR = Path(__file__).parent
-load_dotenv(ROOT_DIR / ".env")
+load_dotenv("/etc/secrets/.env")
 
 import os
 import uuid
