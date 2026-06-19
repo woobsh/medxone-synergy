@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Catalog — MEDXONE SYNERGY</title>
+        <link rel="icon" type="image/png" href="/logo.png" />
+        <link rel="apple-touch-icon" href="/logo.png" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="/css/style.css" />
+        <script src="https://unpkg.com/lucide@latest" defer></script>
+    </head>
+    <body data-testid="catalog-page">
+        <div id="root"></div>
+
+        <header class="site-header">
+            <div class="container">
+                <a class="brand" href="/" data-testid="brand-logo">
+                    <img src="/logo.png" alt="MEDXONE SYNERGY" class="brand-img" />
+                </a>
+                <nav class="nav-links">
+                    <a href="/" data-testid="nav-home">Home</a>
+                    <a href="/catalog.html" data-testid="nav-catalog">Catalog</a>
+                    <a href="/#about" data-testid="nav-about">About</a>
+                    <a href="/#contact" data-testid="nav-contact">Contact</a>
+                    <a class="btn btn-primary btn-sm" href="/#contact" data-testid="nav-cta-quote">Request Quote</a>
+                </nav>
+                <button class="mobile-toggle" data-testid="mobile-menu-toggle" aria-label="Toggle menu">
+                    <i data-lucide="menu" width="24" height="24"></i>
+                </button>
+            </div>
+        </header>
+
+        <section style="padding-top: 3.5rem; padding-bottom: 1.5rem;">
+            <div class="container reveal">
+                <span class="eyebrow">Digital Catalog</span>
+                <h1 style="margin-top: 0.5rem;">Browse our medical device catalog</h1>
+                <p class="text-muted" style="max-width: 640px;">
+                    Filter by category or search by name. Click any product to
+                    view full specs and request a tailored quote from our
+                    specialists.
+                </p>
+            </div>
+        </section>
+
+        <section style="padding-top: 1rem;">
+            <div class="container">
+                <div class="products-toolbar">
+                    <input
+                        type="search"
+                        class="search-input"
+                        id="searchInput"
+                        placeholder="Search by product name, spec…"
+                        data-testid="catalog-search"
+                    />
+                </div>
+                <div class="category-chips" id="categoryChips" data-testid="category-chips">
+                    <button class="chip active" data-cat="" data-testid="chip-all">All categories</button>
+                </div>
+                <div style="height: 2rem;"></div>
+                <div class="product-grid" id="productGrid" data-testid="product-grid">
+                    <div class="empty-state">Loading products…</div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="site-footer" style="margin-top: 3rem;">
+            <div class="container">
+                <div>
+                    <a href="/" class="brand brand-on-dark" style="margin-bottom: 1rem;">
+                        <img src="/logo.png" alt="MEDXONE SYNERGY" class="brand-img" />
+                    </a>
+                    <p style="color:#9eb5cd; max-width: 360px; margin-top: 1rem;">
+                        Trusted distributor of medical equipment for hospitals
+                        across India.
+                    </p>
+                    <p style="color:#6f8aa6; font-size: 0.85rem; margin-top: 0.75rem; letter-spacing: 0.08em;">
+                        CARE · CONNECT · COMMIT · CURE
+                    </p>
+                </div>
+                <div>
+                    <h4>Explore</h4>
+                    <a href="/">Home</a>
+                    <a href="/catalog.html">Catalog</a>
+                    <a href="/#about">About</a>
+                    <a href="/#contact">Contact</a>
+                </div>
+                <div>
+                    <h4>Get in touch</h4>
+                    <a href="mailto:sales@medxone.com">sales@medxone.com</a>
+                    <a href="tel:+919876543210">+91 98765 43210</a>
+                    <a href="/admin.html">Admin login</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                © <span id="footerYear"></span> MEDXONE SYNERGY · All rights reserved.
+            </div>
+        </footer>
+
+        <button class="scroll-top" aria-label="Back to top" data-testid="scroll-top">
+            <i data-lucide="chevron-up" width="20" height="20"></i>
+        </button>
+
+        <script src="/js/common.js"></script>
+        <script src="/js/catalog.js"></script>
+        <script src="/js/enhance.js"></script>
+    </body>
+</html>
