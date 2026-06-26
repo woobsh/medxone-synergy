@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Admin · MEDXONE SYNERGY</title>
+        <link rel="icon" type="image/png" href="/favicon.png" />
+        <link rel="apple-touch-icon" href="/favicon.png" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="/css/style.css" />
+        <script src="https://unpkg.com/lucide@latest" defer></script>
+    </head>
+    <body data-testid="admin-page">
+        <div id="root"></div>
+
+        <!-- LOGIN VIEW -->
+        <div class="admin-login-wrap" id="loginView" data-testid="admin-login-view">
+            <div class="admin-login-card">
+                <div style="text-align: center; margin-bottom: 1.5rem;">
+                    <img src="/logo.png" alt="MEDXONE SYNERGY" class="brand-img brand-img-lg" style="margin: 0 auto;" />
+                    <p style="margin-top: 0.5rem; color: var(--text-muted); font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;">
+                        Admin Console
+                    </p>
+                </div>
+                <h2>Sign in</h2>
+                <p class="muted">Sign in with your admin credentials to manage the catalog.</p>
+                <div id="loginAlert"></div>
+                <form id="loginForm" data-testid="login-form">
+                    <div class="field">
+                        <label for="email">Email</label>
+                        <input id="email" name="email" type="email" required data-testid="login-email" />
+                    </div>
+                    <div class="field">
+                        <label for="password">Password</label>
+                        <input id="password" name="password" type="password" required data-testid="login-password" />
+                    </div>
+                    <button class="btn btn-primary btn-block" type="submit" data-testid="login-submit">
+                        <i data-lucide="log-in" width="18" height="18"></i> Sign in
+                    </button>
+                </form>
+                <p class="muted" style="margin-top:1.25rem; font-size: 0.8rem;">
+                    <a href="/">← Back to website</a>
+                </p>
+            </div>
+        </div>
+
+        <!-- DASHBOARD VIEW -->
+        <div class="admin-layout" id="dashboardView" style="display:none" data-testid="admin-dashboard">
+            <aside class="admin-sidebar">
+                <a href="/" class="brand brand-on-dark" style="margin-bottom: 2rem;">
+                    <img src="/logo.png" alt="MEDXONE SYNERGY" class="brand-img brand-img-sm" />
+                </a>
+                <nav class="admin-nav">
+                    <button class="active" data-view="products" data-testid="nav-products"><i data-lucide="package" width="16" height="16"></i> Products</button>
+                    <button data-view="categories" data-testid="nav-categories"><i data-lucide="layers" width="16" height="16"></i> Categories</button>
+                    <button data-view="inquiries" data-testid="nav-inquiries"><i data-lucide="inbox" width="16" height="16"></i> Inquiries</button>
+                    <button id="logoutBtn" data-testid="logout-btn" style="margin-top:auto;"><i data-lucide="log-out" width="16" height="16"></i> Logout</button>
+                </nav>
+            </aside>
+
+            <main class="admin-main">
+                <!-- PRODUCTS VIEW -->
+                <section id="productsView" data-testid="products-view">
+                    <div class="admin-header-row">
+                        <div>
+                            <h2>Products</h2>
+                            <p class="text-muted" style="margin:0">Add, edit and delete devices in the catalog.</p>
+                        </div>
+                        <button class="btn btn-primary" id="addProductBtn" data-testid="add-product-btn">
+                            <i data-lucide="plus" width="16" height="16"></i> Add Product
+                        </button>
+                    </div>
+                    <div id="productsTable"></div>
+                </section>
+
+                <!-- CATEGORIES VIEW -->
+                <section id="categoriesView" style="display:none" data-testid="categories-view">
+                    <div class="admin-header-row">
+                        <div>
+                            <h2>Categories</h2>
+                            <p class="text-muted" style="margin:0">Manage product categories — used to group the catalog.</p>
+                        </div>
+                        <button class="btn btn-primary" id="addCategoryBtn" data-testid="add-category-btn">
+                            <i data-lucide="plus" width="16" height="16"></i> Add Category
+                        </button>
+                    </div>
+                    <div id="categoriesTable"></div>
+                </section>
+
+                <!-- INQUIRIES VIEW -->
+                <section id="inquiriesView" style="display:none" data-testid="inquiries-view">
+                    <div class="admin-header-row">
+                        <div>
+                            <h2>Inquiries</h2>
+                            <p class="text-muted" style="margin:0">Customer messages and quote requests.</p>
+                        </div>
+                    </div>
+                    <div id="inquiriesTable"></div>
+                </section>
+            </main>
+        </div>
+
+        <!-- Product modal -->
+        <div class="modal-backdrop" id="productModal" data-testid="product-modal">
+            <div class="modal">
+                <h3 id="productModalTitle">Add Product</h3>
+                <div id="productModalAlert"></div>
+                <form id="productForm">
+                    <div class="field">
+                        <label for="pName">Product name</label>
+                        <input id="pName" type="text" required data-testid="product-name" />
+                    </div>
+                    <div class="field-row">
+                        <div class="field">
+                            <label for="pCategory">Category</label>
+                            <select id="pCategory" required data-testid="product-category"></select>
+                        </div>
+                        <div class="field">
+                            <label for="pImage">Product image</label>
+                            <label class="image-upload" for="pImageFile" data-testid="image-upload-label">
+                                <i data-lucide="upload-cloud" width="18" height="18"></i>
+                                <div style="margin-top:0.35rem; font-size:0.85rem;">
+                                    Upload from gallery, files or desktop
+                                </div>
+                                <input
+                                    type="file"
+                                    id="pImageFile"
+                                    accept="image/*"
+                                    style="display:none"
+                                    data-testid="product-image-input"
+                                />
+                            </label>
+                            <div class="image-preview" id="imagePreview" style="display:none;"></div>
+                            <input type="hidden" id="pImageUrl" />
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label for="pShort">Short description</label>
+                        <input id="pShort" type="text" maxlength="160" data-testid="product-short" />
+                    </div>
+                    <div class="field">
+                        <label for="pDesc">Full description</label>
+                        <textarea id="pDesc" data-testid="product-desc"></textarea>
+                    </div>
+                    <div class="field">
+                        <label for="pSpecs">Specifications</label>
+                        <textarea id="pSpecs" placeholder="One per line, or use | separators" data-testid="product-specs"></textarea>
+                    </div>
+                    <div class="field-row">
+                        <div class="field">
+                            <label for="pEmail">Contact email</label>
+                            <input id="pEmail" type="email" data-testid="product-email" />
+                        </div>
+                        <div class="field">
+                            <label for="pPhone">Contact phone</label>
+                            <input id="pPhone" type="tel" data-testid="product-phone" />
+                        </div>
+                    </div>
+                    <div class="modal-actions">
+                        <button type="button" class="btn btn-ghost" data-close-modal data-testid="product-modal-cancel">Cancel</button>
+                        <button type="submit" class="btn btn-primary" data-testid="product-modal-save">Save Product</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Category modal -->
+        <div class="modal-backdrop" id="categoryModal" data-testid="category-modal">
+            <div class="modal" style="max-width:480px;">
+                <h3 id="categoryModalTitle">Add Category</h3>
+                <div id="categoryModalAlert"></div>
+                <form id="categoryForm">
+                    <div class="field">
+                        <label for="cName">Category name</label>
+                        <input id="cName" type="text" required data-testid="category-name" />
+                    </div>
+                    <div class="field">
+                        <label for="cDesc">Description</label>
+                        <textarea id="cDesc" data-testid="category-desc"></textarea>
+                    </div>
+                    <div class="modal-actions">
+                        <button type="button" class="btn btn-ghost" data-close-modal data-testid="category-modal-cancel">Cancel</button>
+                        <button type="submit" class="btn btn-primary" data-testid="category-modal-save">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Confirm modal -->
+        <div class="modal-backdrop" id="confirmModal" data-testid="confirm-modal">
+            <div class="modal" style="max-width:420px;">
+                <h3 id="confirmTitle">Are you sure?</h3>
+                <p id="confirmBody" class="text-muted"></p>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-ghost" data-close-modal data-testid="confirm-cancel">Cancel</button>
+                    <button type="button" class="btn btn-danger" id="confirmYes" data-testid="confirm-yes">Yes, delete</button>
+                </div>
+            </div>
+        </div>
+
+        <script src="/js/common.js"></script>
+        <script src="/js/admin.js"></script>
+    </body>
+</html>
